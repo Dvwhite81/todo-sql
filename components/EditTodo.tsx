@@ -1,28 +1,29 @@
 'use client';
 
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { type FormEvent, useState } from 'react';
 
 import type { TodoType } from '@/lib/types';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import EditInput from './EditInput';
+import FormInput from './FormInput';
 
 type EditTodoProps = {
   todo: TodoType;
+  editTodo: (todo: TodoType) => void;
   unselectTodo: () => void;
 };
 
-export default function EditTodo({ todo, unselectTodo }: EditTodoProps) {
-  const { id, title, description, isComplete } = todo;
+export default function EditTodo({
+  todo,
+  editTodo,
+  unselectTodo,
+}: EditTodoProps) {
+  const { title, description, isComplete } = todo;
 
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description || '');
   const [newComplete, setNewComplete] = useState(isComplete);
-
-  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewComplete(e.target.checked);
-  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,16 +34,16 @@ export default function EditTodo({ todo, unselectTodo }: EditTodoProps) {
       description: newDescription,
       isComplete: newComplete,
     };
-    console.log('updated:', updatedTodo);
+    editTodo(updatedTodo);
     unselectTodo();
   };
 
   return (
-    <div className="overlay absolute h-full w-full top-0 left-0">
+    <div className="overlay absolute h-full w-full top-0 left-0 z-10">
       <div className="h-full w-full flex items-center justify-center">
         <div className="relative m-auto h-[80vh] w-[80vw] flex items-center justify-center">
           <Button
-            className="absolute right-4 top-4 hover:cursor-pointer"
+            className="absolute right-4 top-4"
             type="button"
             onClick={unselectTodo}
           >
@@ -52,13 +53,13 @@ export default function EditTodo({ todo, unselectTodo }: EditTodoProps) {
             className="bg-white h-[80vh] w-[80vw] flex flex-col items-center justify-evenly rounded-2xl"
             onSubmit={handleSubmit}
           >
-            <EditInput
+            <FormInput
               id="title"
               label="Title"
               value={newTitle}
               setValue={setNewTitle}
             />
-            <EditInput
+            <FormInput
               id="description"
               label="Description"
               value={newDescription}
@@ -69,7 +70,7 @@ export default function EditTodo({ todo, unselectTodo }: EditTodoProps) {
                 type="checkbox"
                 id="complete"
                 checked={newComplete}
-                onChange={handleCheckboxChange}
+                onChange={(e) => setNewComplete(e.target.checked)}
               />
               <Label htmlFor="complete">Complete?</Label>
             </div>

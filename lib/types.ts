@@ -4,3 +4,5 @@ export type TodoType = {
   description?: string;
   isComplete: boolean;
 };
+
+export type NewTodoType = Omit<TodoType, 'id' | 'isComplete'>;

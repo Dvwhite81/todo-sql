@@ -1,19 +1,19 @@
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 
-type EditInputProps = {
+type FormInputProps = {
   id: string;
   label: string;
   value: string;
   setValue: (value: string) => void;
 };
 
-export default function EditInput({
+export default function FormInput({
   id,
   label,
   value,
   setValue,
-}: EditInputProps) {
+}: FormInputProps) {
   return (
     <div>
       <Label htmlFor={id}>{label}: </Label>
@@ -23,7 +23,7 @@ export default function EditInput({
         name={id}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        required
+        required={id === 'title'}
       />
     </div>
   );
