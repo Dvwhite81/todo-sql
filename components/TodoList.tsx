@@ -8,11 +8,22 @@ type TodoListProps = {
   editTodo: (todo: TodoType) => void;
 };
 
-export default function TodoList({ todos, selectTodo, deleteTodo, editTodo }: TodoListProps) {
+export default async function TodoList({
+  todos,
+  selectTodo,
+  deleteTodo,
+  editTodo,
+}: TodoListProps) {
   return (
     <div className="w-full flex flex-col items-center gap-4">
       {todos.map((todo) => (
-        <TodoSingle key={todo.id} todo={todo} selectTodo={selectTodo} deleteTodo={deleteTodo} editTodo={editTodo} />
+        <TodoSingle
+          key={todo.id}
+          todo={todo}
+          selectTodo={selectTodo}
+          deleteTodo={deleteTodo}
+          editTodo={editTodo}
+        />
       ))}
     </div>
   );

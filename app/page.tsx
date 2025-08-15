@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 
 import type { NewTodoType, TodoType } from '@/lib/types';
-import { TODOS } from '@/lib/data';
+import { TODOS } from '@/lib/placeholder-data';
 import AddTodo from '@/components/AddTodo';
 import EditTodo from '@/components/EditTodo';
 import TodoList from '@/components/TodoList';
